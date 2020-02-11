@@ -2,8 +2,7 @@ Module.register("MMM-MonthCalendar", {
 
     defaults: {
         updateDelay: 5,
-        preFill: true,
-        postFill: true
+        showAdjacentMonths: true
     },
 
     weekdays: [],
@@ -55,7 +54,7 @@ Module.register("MMM-MonthCalendar", {
 
     getPrefill: function() {
         /** Fills up the first calendar row with days of the previous month, 
-         * when the config.preFill param is set to true. 
+         * when the config.showAdjacentMonths param is set to true. 
          * Otherwise it fills with empty space. */
         let days = [];
         let lastMonthDayCount = moment().startOf('month').subtract(1, 'day').date();
@@ -63,22 +62,20 @@ Module.register("MMM-MonthCalendar", {
         let fillBefore = moment().startOf('month').weekday();
         let fillStart = (lastMonthDayCount + 1) - fillBefore;
 
+        if (!this.config.showAdjacentMonths) return Array(fillBefore).fill("");
+
         for (let preDay = fillStart; preDay <= lastMonthDayCount; preDay++) {
-            if (this.config.preFill) {
-                days.push(preDay);
-            } else {
-                days.push("");
-            }
+            days.push(preDay);
         }
         return days;
     },
 
     getPostfill: function() {
         /** Fills up the last calendar row with days of the next month, 
-         * when the config.postFill param is set to true. 
+         * when the config.showAdjacentMonths param is set to true. 
          * Otherwise it fills with empty space. */
         let days = [];
-        if (!this.config.postFill) return days;
+        if (!this.config.showAdjacentMonths) return days;
 
         let lastDay = moment().endOf('month').weekday()
         let fillAfter = 7 - lastDay;
