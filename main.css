@@ -11,10 +11,6 @@
     font-weight: 600;
 }
 
-.module.MMM-MonthCalendar .module-header {
-    text-align: center;
-}
-
 .module.MMM-MonthCalendar .calendar-daysinweek div,
 .module.MMM-MonthCalendar .calendar-days div {
     padding: 4px 0;
